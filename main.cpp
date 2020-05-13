@@ -1,12 +1,21 @@
 #include <iostream>
+#include <fstream>
 #include "fano.h"
 
 
 int main() {
-    std::string text = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabcd";//"In static member function 'static int* EncodingTree::textToCharMap(std::__cxx11::string)':";
+    std::string input;
+    std::cout << "input string or filename to encode: ";
+    std::cin >> input;
 
-    BitBuffer buff = FanoEncoder::encode(text, true, true);
-    std::cout << FanoEncoder::decode(buff);
+    std::ifstream inFile;
+    inFile.open(input);
+    if (inFile) {
+        input = std::string((std::istreambuf_iterator<char>(inFile)), std::istreambuf_iterator<char>());
+    }
+
+    BitBuffer buff = FanoEncoder::encode(input, true, true);
+    std::cout << "\n\ndecoder output: " << FanoEncoder::decode(buff);
 
     return 0;
 }

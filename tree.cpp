@@ -29,6 +29,14 @@ bool EncodingTree::Node::make_children(RbMap<unsigned char, BitBuffer> &characte
     }
 }
 
+void print_readable_char(unsigned char c) {
+    if (c == '\n') {
+        std::cout << "'\\n'";
+    } else {
+        std::cout << "'" << c << "'";
+    }
+}
+
 void EncodingTree::Node::debug_print(int intend) {
     if (left != nullptr) {
         left->debug_print(intend + 1);
@@ -37,9 +45,11 @@ void EncodingTree::Node::debug_print(int intend) {
         std::cout << "    ";
     }
     if (weighted_chars.length() == 1) {
-        std::cout << weighted_chars[0].first << " " << weighted_chars[0].second << "\n";
+        print_readable_char(weighted_chars[0].first);
+        std::cout << " " << weighted_chars[0].second << "\n";
     } else if (decode_char != 0) {
-        std::cout << decode_char << "\n";
+        print_readable_char(decode_char);
+        std::cout << "\n";
     } else {
         std::cout << "#\n";
     }
