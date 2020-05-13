@@ -96,6 +96,7 @@ void BitBuffer::write_buffer(BitBuffer const& buffer) {
 }
 
 void BitBuffer::write_bit(bit b) {
+    ensure_size(size + 1);
     if (length_bits() * 8 == length_bytes()) {
         write_byte((bit) b);
         size -= 7;
