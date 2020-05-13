@@ -10,7 +10,6 @@ template <typename T>
 class Array {
     static const int REALLOCATION_ELEMENTS = 16;
 
-    std::allocator<T> allocator;
     T* memory_span = nullptr;
     int size = 0;
     int allocated_size = 0;
@@ -23,13 +22,14 @@ class Array {
             }
 
             if (memory_span != nullptr) {
-                memory_span = (T*) realloc(memory_span, allocated_size * sizeof(T));
+                T* new_memory_span = new T[allocated_size];
+                for (int i = 0; i < old_size; i++) {
+                    new_memory_span[i] = memory_span[i];
+                }
+                delete[] (memory_span);
+                memory_span = new_memory_span;
             } else {
-                memory_span = (T*) malloc(allocated_size * sizeof(T));
-            }
-
-            for (int i = old_size; i < allocated_size; i++) {
-                allocator.construct(&memory_span[i]);
+                memory_span = new T[allocated_size];
             }
         }
     }
@@ -119,10 +119,7 @@ public:
 
     void clear() {
         if (memory_span != nullptr) {
-            for (int i = 0; i < allocated_size; i++) {
-                allocator.destroy(&memory_span[i]);
-            }
-            free(memory_span);
+            delete[] (memory_span);
             memory_span = nullptr;
         }
         size = allocated_size = 0;
