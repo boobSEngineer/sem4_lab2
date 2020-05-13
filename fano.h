@@ -7,7 +7,7 @@
 
 
 namespace FanoEncoder {
-    BitBuffer encode(std::string text);
+    BitBuffer encode(std::string text, bool verbose = false, bool verbose_tree = false);
     std::string decode(BitBuffer& buffer);
 };
 

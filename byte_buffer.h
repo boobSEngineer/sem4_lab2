@@ -5,7 +5,7 @@
 #define SEM4LAB2_BYTE_BUFFER_H
 
 typedef unsigned char byte;
-typedef bool bit;
+typedef unsigned char bit;
 
 class BitBuffer {
     static const size_t REALLOCATION_SIZE = 1024;
