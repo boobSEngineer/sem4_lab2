@@ -6,7 +6,7 @@
 int main() {
     std::string input;
     std::cout << "input string or filename to encode: ";
-    std::cin >> input;
+    std::getline(std::cin, input);
 
     std::ifstream inFile;
     inFile.open(input);
